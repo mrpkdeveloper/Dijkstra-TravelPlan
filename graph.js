@@ -14,11 +14,33 @@ function creategraph(V, E) {
   return adjency_list;
 }
 
-const V = 3;
+function djikstra(graph, V, src) {}
+
+// const V = 3;
+// const E = [
+//   [0, 1, 1],
+//   [0, 2, 2],
+//   [1, 2, 3],
+// ];
+let src = 0;
+const V = 9;
 const E = [
-  [0, 1, 1],
-  [0, 2, 2],
-  [1, 2, 3],
+  [0, 1, 4],
+  [0, 7, 8],
+  [1, 7, 11],
+  [1, 2, 8],
+  [2, 8, 2],
+  [2, 3, 7],
+  [2, 5, 4],
+  [3, 4, 9],
+  [3, 5, 14],
+  [4, 5, 10],
+  [5, 6, 2],
+  [6, 7, 1],
+  [6, 8, 6],
+  [7, 8, 7],
 ];
 let graph = creategraph(V, E);
 console.log(graph);
+let distances = djikstra(graph, V, src);
+console.log(distances);
