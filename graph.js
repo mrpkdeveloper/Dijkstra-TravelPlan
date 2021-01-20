@@ -43,17 +43,16 @@ function djikstra(graph, V, src) {
     visited[minVertex] = true;
 
     //explore neighbours
-    for (let j = 0; j < V; j++) {
+    for (let j = 0; j < graph[minVertex].length; j++) {
       //check if neighbour or not
+      let edge = graph[minVertex][j];
       if (
-        graph[minVertex][j] != 0 &&
-        !visited[j] &&
+        !visited[edge[0]] &&
+        distance[edge[0]] > distance[minVertex] + edge[1] &&
         distance[minVertex] != 1000
       ) {
-        let newdist = distance[minVertex] + graph[minVertex][j];
-        if (newdist < distance[j]) {
-          distance[j] = newdist;
-        }
+        let newdist = distance[minVertex] + edge[1];
+        distance[edge[0]] = newdist;
       }
     }
   }
@@ -64,31 +63,31 @@ function djikstra(graph, V, src) {
   }
 }
 
-const V = 4;
-const E = [
-  [0, 1, 5],
-  [0, 2, 2],
-  [1, 2, 3],
-  [2, 3, 4],
-];
-let src = 0;
-// const V = 9;
+// const V = 4;
 // const E = [
-//   [0, 1, 4],
-//   [0, 7, 8],
-//   [1, 7, 11],
-//   [1, 2, 8],
-//   [2, 8, 2],
-//   [2, 3, 7],
-//   [2, 5, 4],
-//   [3, 4, 9],
-//   [3, 5, 14],
-//   [4, 5, 10],
-//   [5, 6, 2],
-//   [6, 7, 1],
-//   [6, 8, 6],
-//   [7, 8, 7],
+//   [0, 1, 5],
+//   [0, 2, 2],
+//   [1, 2, 1],
+//   [2, 3, 4],
 // ];
+let src = 0;
+const V = 9;
+const E = [
+  [0, 1, 4],
+  [0, 7, 8],
+  [1, 7, 11],
+  [1, 2, 8],
+  [2, 8, 2],
+  [2, 3, 7],
+  [2, 5, 4],
+  [3, 4, 9],
+  [3, 5, 14],
+  [4, 5, 10],
+  [5, 6, 2],
+  [6, 7, 1],
+  [6, 8, 6],
+  [7, 8, 7],
+];
 let graph = creategraph(V, E);
 console.log(graph);
 // let distances = djikstra(graph, V, src);
