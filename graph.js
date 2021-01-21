@@ -19,7 +19,7 @@ function minvertex(distance, visited, V) {
   for (let i = 0; i < V; i++) {
     if (
       !visited[i] &&
-      (minvertex === -1 || distance[i] < distance[minvertex])
+      (minvertex === -1 || distance[i][0] < distance[minvertex][0])
     ) {
       minvertex = i;
     }
@@ -30,37 +30,40 @@ function minvertex(distance, visited, V) {
 function djikstra(graph, V, src) {
   let visited = Array(V).fill(false);
   var distance = [];
-  distance[0] = 0;
-  // initialising all distances with max value
-  for (let i = 1; i < V; i++) {
-    distance[i] = 1000;
+  //making distance storing [distance,prev node]
+  // initialising all distances with max value and prev node as -1
+  for (let i = 0; i < V; i++) {
+    distance.push([1000, -1]);
   }
+  distance[src][0] = 0;
 
   for (let i = 0; i < V - 1; i++) {
     //find vertex with min distance
     let minVertex = minvertex(distance, visited, V);
-    console.log(minVertex);
+    // console.log(minVertex);
     visited[minVertex] = true;
 
     //explore neighbours
     for (let j = 0; j < graph[minVertex].length; j++) {
-      //check if neighbour or not
+      //getting neighbour edges
       let edge = graph[minVertex][j];
       if (
         !visited[edge[0]] &&
-        distance[edge[0]] > distance[minVertex] + edge[1] &&
-        distance[minVertex] != 1000
+        distance[edge[0]][0] > distance[minVertex][0] + edge[1] &&
+        distance[minVertex][0] != 1000
       ) {
-        let newdist = distance[minVertex] + edge[1];
-        distance[edge[0]] = newdist;
+        let newdist = distance[minVertex][0] + edge[1];
+        distance[edge[0]][0] = newdist;
+        distance[edge[0]][1] = minVertex;
       }
     }
   }
 
   //print distance matrix
-  for (let i = 0; i < V; i++) {
-    console.log(i + " " + distance[i]);
-  }
+  // for (let i = 0; i < V; i++) {
+  //   console.log(i + " " + distance[i]);
+  // }
+  return distance;
 }
 
 // const V = 4;
@@ -90,6 +93,6 @@ const E = [
 ];
 let graph = creategraph(V, E);
 console.log(graph);
-// let distances = djikstra(graph, V, src);
-djikstra(graph, V, src);
-// console.log(distances);
+let distances = djikstra(graph, V, src);
+// djikstra(graph, V, src);
+console.log(distances);
